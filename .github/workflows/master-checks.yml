@@ -26,7 +26,7 @@ jobs:
       run: yarn install --frozen-lockfile
     - name: Lint code
       run: yarn lint
-  Build-App:
+  Build-Export-App:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,6 +54,10 @@ jobs:
       run: yarn build
       env:
         NEXT_PUBLIC_BASE_PATH: /dev-hub
+    - name: Export app    
+      run: yarn export
+      env:
+        NEXT_PUBLIC_BASE_PATH: /dev-hub
   Check-Dependencies:
     runs-on: ubuntu-latest
     strategy:
@@ -66,5 +70,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Cache packages
+      uses: actions/cache@v2
+      with:
+        path: ${{ github.workspace }}/node_modules
+        key: ${{ runner.OS }}-${{ matrix.node-version }}-node-${{ hashFiles('**/yarn.lock') }}
+    - name: Install packages
+      run: yarn install --frozen-lockfile
     - name: Check dependencies
       run: npx depcheck
