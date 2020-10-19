@@ -13,11 +13,17 @@
     "build": "next build",
     "dev": "next dev",
     "export": "next export",
+    "lint": "eslint .",
     "start": "next start"
   },
   "dependencies": {
     "next": "9.5.5",
+    "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-plugin-react": "^7.21.4"
   }
 }

@@ -34,9 +34,8 @@ We are not quite there yet, however we will be deploying this to [GitHub pages](
 
 ## Available Scripts
 
-The [Next.js CLI](https://nextjs.org/docs/api-reference/cli) allows you to start, build, and export your application.
-
-- `yarn dev` starts the application in development mode with hot-code reloading, error reporting, and more.
 - `yarn build` creates an optimized production build of your application. The output displays information about each route.
-- `yarn start` starts the application in production mode. The application should be compiled with `yarn build` first.
+- `yarn dev` starts the application in development mode with hot-code reloading, error reporting, and more.
 - `yarn export` allows you to export your app to static HTML, which can be run standalone without the need of a Node.js server.
+- `yarn lint` runs ESLint towards all project directories and files except those specified inside the `.eslintignore` configuration file.
+- `yarn start` starts the application in production mode. The application should be compiled with `yarn build` first.
