@@ -6,9 +6,104 @@ A centralized resource for project documentation.
 
 ## Content Management
 
-The content of this website is pulled from repository root-level `docs/` directories containing Markdown files.
+The content of this website is pulled from repository root-level `docs/` directories containing [Markdown](https://guides.github.com/features/mastering-markdown/) files with proper use of [YAML Front matter](https://jekyllrb.com/docs/front-matter/).
 
-The content must be a Markdown file with appropriate metadata and elements (to be determined), see the [Mastering Markdown guide](https://guides.github.com/features/mastering-markdown/) for more information on creating Markdown files.
+### Directory Structure
+
+To have the content of a repository included in the `dev-hub`, the directory structure must adhere to the following convention:
+
+- The repository contains a root-level `docs/` directory.
+- The `docs/` and all respective sub-directories must contain an `index.md`.
+- Example repository directory structure:
+
+```yaml
+project
+│   .gitignore
+│   LICENSE
+│   package.json
+│   README.md
+│   yarn.lock
+│
+└───docs
+│   │   index.md
+│   │
+│   └───marketplace
+│   │   │   billing-customers.md
+│   │   │   index.md
+│   │   │   security-requirements.md
+│   │
+│   └───rest-api
+│   │   │   authentication-basics.md
+│   │   │   getting-started.md
+│   │   │   index.md
+│
+└───src
+│   index.js
+```
+
+### Front Matter
+
+All Markdown files must contain the appropriate YAML Front matter elements:
+
+#### `version`
+
+- **Purpose:** Indicates the version to which a page applies.
+- **Type:** `String`
+- **Required:** `true`
+- **Notes:** The `'*'` is used to denote all releases for the version.
+- **Example:**
+
+```yaml
+version: "v2.1.1"
+```
+
+#### `title`
+
+- **Purpose:** Set a human-friendly title for use in the rendered page's `<title>` tag and an `h1` element at the top of the page.
+- **Type:** `String`
+- **Required:** `false`. If omitted, the page `<title>` will still be set with a generic value like `'EQ Works Dev Hub'`.
+- **Example:**
+
+```yaml
+title: "Getting started with LOCUS"
+```
+
+#### `shortTitle`
+
+- **Purpose:** An abbreviated variant of the page title for use in breadcrumbs.
+- **Type:** `String`
+- **Required:** `false`. If omitted, the `title` will be used.
+- **Example:**
+
+```yaml
+title: "Getting started with LOCUS"
+shortTitle: "LOCUS"
+```
+
+#### `intro`
+
+- **Purpose:** Sets the intro for the page. This string will render after the `title`.
+- **Type:** `String`
+- **Required:** `false`
+- **Example:**
+
+```yaml
+intro: "LOCUS is a product made by EQ Works."
+```
+
+### Example Markdown File
+
+```yaml
+---
+version: "*"
+title: "Getting Started with LOCUS"
+shortTitle: "LOCUS"
+intro: "You can use LOCUS to do all sorts of crazy things."
+---
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+```
 
 ---
 
