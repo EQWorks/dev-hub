@@ -3,15 +3,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import '../styles/globals.css'
-
-const PREFIX = process.env.NEXT_PUBLIC_BASE_PATH || ''
+import { URL_PREFIX } from '../utils/constants'
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
         <title>EQ Works | Dev Hub</title>
-        <link href={`${PREFIX}/favicon.ico`} rel="shortcut icon"></link>
+        <link href={`${URL_PREFIX}/favicon.ico`} rel="shortcut icon" />
       </Head>
       <Component {...pageProps} />
     </>
