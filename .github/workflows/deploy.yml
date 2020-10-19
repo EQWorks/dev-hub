@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Deploy Exported App To GitHub Pages
 
 on:
   push:
@@ -21,16 +21,24 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn install --frozen-lockfile
-    - run: yarn build
+
+    - name: Install packages
+      run: yarn install --frozen-lockfile
+
+    - name: Build app
+      run: yarn build
       env:
         NEXT_PUBLIC_BASE_PATH: /dev-hub
-    - run: yarn export
+
+    - name: Export app    
+      run: yarn export
       env:
         NEXT_PUBLIC_BASE_PATH: /dev-hub
-    - run: touch ./out/.nojekyll
-    
-    - name: Deploy
+
+    - name: Create .nojekyll file
+      run: touch ./out/.nojekyll
+
+    - name: Deploy exported app to GitHub Pages branch
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
