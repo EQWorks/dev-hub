@@ -10,8 +10,9 @@
     "url": "git+https://github.com/EQWorks/dev-hub.git"
   },
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "dev": "next dev",
+    "export": "next export",
     "start": "next start"
   },
   "dependencies": {
