@@ -1,11 +1,11 @@
-name: Lint Code
+name: Master Checks
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 jobs:
-  lint:
+  Lint-Code:
     runs-on: ubuntu-latest
     strategy:
       matrix:
