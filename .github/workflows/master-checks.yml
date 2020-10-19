@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Set Node.js version to ${{ matrix.node-version }}
+    - name: Set node to v${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -34,7 +34,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Set Node.js version to ${{ matrix.node-version }}
+    - name: Set node to v${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -54,3 +54,17 @@ jobs:
       run: yarn build
       env:
         NEXT_PUBLIC_BASE_PATH: /dev-hub
+  Check-Dependencies:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set node to v${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Check dependencies
+      run: npx depcheck
