@@ -1,6 +1,6 @@
 import styles from "../styles/Home.module.css";
 
-const PREFIX = "/dev-hub";
+const PREFIX = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export default function Home() {
   return (

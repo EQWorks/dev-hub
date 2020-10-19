@@ -2,7 +2,7 @@ import Head from "next/head";
 
 import '../styles/globals.css'
 
-const PREFIX = "/dev-hub";
+const PREFIX = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 function MyApp({ Component, pageProps }) {
   return (
