@@ -1,0 +1,28 @@
+name: Lint Code
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set Node.js version to ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Cache packages
+      uses: actions/cache@v2
+      with:
+        path: ${{ github.workspace }}/node_modules
+        key: ${{ runner.OS }}-${{ matrix.node-version }}-node-${{ hashFiles('**/yarn.lock') }}
+    - name: Install packages
+      run: yarn install --frozen-lockfile
+    - name: Lint code
+      run: yarn lint
