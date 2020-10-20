@@ -6,7 +6,7 @@ A centralized resource for project documentation.
 
 ## Content Management
 
-The content of this website is pulled from repository root-level `docs/` directories containing [Markdown](https://guides.github.com/features/mastering-markdown/) files with proper use of [YAML Front matter](https://jekyllrb.com/docs/front-matter/).
+The content of this website is pulled from repository root-level `docs/` directories containing [Markdown](https://guides.github.com/features/mastering-markdown/) files with proper use of [YAML Front Matter](https://jekyllrb.com/docs/front-matter/).
 
 ### Directory Structure
 
