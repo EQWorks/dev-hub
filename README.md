@@ -6,7 +6,7 @@ A centralized resource for project documentation.
 
 ## Content Management
 
-The content of this website is pulled from repository root-level `docs/` directories containing [Markdown](https://guides.github.com/features/mastering-markdown/) files with proper use of [YAML Front Matter](https://jekyllrb.com/docs/front-matter/).
+The content of this app is pulled from repository root-level `docs/` directories containing [Markdown](https://guides.github.com/features/mastering-markdown/) files with proper use of [YAML Front Matter](https://jekyllrb.com/docs/front-matter/).
 
 ### Directory Structure
 
@@ -109,28 +109,27 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 
 ## Development
 
-This website is built using the [Next.js](https://nextjs.org/) framework.
+This app is built using [Create React App](https://github.com/facebook/create-react-app).
 
-To get the website running locally, please do the following:
+To get the app running locally, please do the following:
 
 1. Ensure your environment has [Git](https://git-scm.com/), [Node.js](https://nodejs.org/en/), and [npm](https://www.npmjs.com/) installed.
 2. Clone repository, run `git clone git@github.com:EQWorks/dev-hub.git`.
 3. Install dependencies, run `yarn`.
-4. Start the website in development mode, run `yarn dev`.
-5. View website at http://localhost:3000.
+4. Run the app in development mode, run `yarn start`.
+5. View app at http://localhost:3000.
 
 ---
 
 ## Production
 
-We are not quite there yet, however we will be deploying this to [GitHub pages](https://pages.github.com/), as the result of this project will be a Static-Site Generated (SSG) website.
+We are not quite there yet, however we will be deploying this to [GitHub pages](https://pages.github.com/), as the result of this project will be a Static-Site Generated (SSG) app.
 
 ---
 
 ## Available Scripts
 
-- `yarn build` creates an optimized production build of your application. The output displays information about each route.
-- `yarn dev` starts the application in development mode with hot-code reloading, error reporting, and more.
-- `yarn export` allows you to export your app to static HTML, which can be run standalone without the need of a Node.js server.
+- `yarn build` builds the app for production to the `build` directory. It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
 - `yarn lint` runs ESLint towards all project directories and files except those specified inside the `.eslintignore` configuration file.
-- `yarn start` starts the application in production mode. The application should be compiled with `yarn build` first.
+- `yarn start` runs the app in development mode. The page will reload if you make edits. You will also see any lint errors in the console.
+- `yarn test` laucnes the test runner in the interactive watch mode.
