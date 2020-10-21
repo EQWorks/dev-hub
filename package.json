@@ -17,6 +17,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@mdx-js/loader": "^1.6.19",
+    "@next/mdx": "^9.5.5",
     "next": "9.5.5",
     "prop-types": "^15.7.2",
     "react": "16.14.0",

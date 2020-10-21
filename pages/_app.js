@@ -2,7 +2,6 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import '../styles/globals.css'
 import { URL_PREFIX } from '../utils/constants'
 
 function MyApp({ Component, pageProps }) {
