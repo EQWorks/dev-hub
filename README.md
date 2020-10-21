@@ -130,6 +130,8 @@ We are not quite there yet, however we will be deploying this to [GitHub pages](
 ## Available Scripts
 
 - `yarn build` builds the app for production to the `build` directory. It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
+- `yarn deploy` publishes the `build` directory to the `gh-pages` branch, which hosts the app.
 - `yarn lint` runs ESLint towards all project directories and files except those specified inside the `.eslintignore` configuration file.
+- `yarn predeploy` runs automatically before the `yarn deploy` script runs by performing an app build (`yarn build`).
 - `yarn start` runs the app in development mode. The page will reload if you make edits. You will also see any lint errors in the console.
 - `yarn test` laucnes the test runner in the interactive watch mode.
