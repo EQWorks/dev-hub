@@ -1,6 +1,5 @@
 # directories
 .git
 .github
-.next
+build
 node_modules
-out
