@@ -1,24 +1,30 @@
-import React from 'react'
-import logo from './logo.svg'
+// import extractMdxMeta from 'extract-mdx-metadata'
+import { importMDX } from 'mdx.macro'
+// import raw from 'raw.macro'
+import React, { lazy, Suspense } from 'react'
 import './App.css'
 
+const Content = lazy(() => importMDX('./docs/index.mdx'))
+
 function App() {
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const document = raw('./docs/index.mdx')
+  //     console.log(document)
+  //     const meta = await extractMdxMeta(document)
+ 
+  //     console.log('meta', meta)
+  //   }
+  //   fetchData()
+  // }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Dev Hub</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Content />
+      </Suspense>
     </div>
   )
 }
