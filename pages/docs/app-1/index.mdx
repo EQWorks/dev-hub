@@ -1,0 +1,34 @@
+---
+version: "*"
+title: "App 1"
+shortTitle: "App 1"
+intro: "This section is to demonstration the intro text."
+---
+
+import Component from "./component.js";
+import Data from "./data.json";
+import Document from "./document.mdx";
+
+## JSX Block
+
+<div style={{ padding: "10px 30px", backgroundColor: "tomato" }}>
+  <h3>Cool!</h3>
+</div>
+
+---
+
+## React Component
+
+<Component />
+
+---
+
+## JSON Data
+
+<code>{JSON.stringify(Data)}</code>
+
+---
+
+## MDX Document
+
+<Document />

@@ -1,63 +1,51 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import MDXIndex, { metadata } from '../docs/dev-hub/index.mdx'
-
-export default function Index({ localDocs }) {
-  console.log(metadata)
-  console.log(localDocs)
+export default function Index({ allDirsAndFiles }) {
+  console.log(allDirsAndFiles)
 
   return (
     <div>
-      <h1>EQ Works Dev Hub</h1>
-      <MDXIndex />
+      <h1>Dev Hub Index</h1>
     </div>
   )
 }
 
 Index.propTypes = {
-  localDocs: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
+  allDirsAndFiles: PropTypes.shape({
+    directories: PropTypes.object,
     files: PropTypes.arrayOf(PropTypes.string),
-  })).isRequired,
+  }).isRequired,
 }
 
 export async function getStaticProps() {
   const fs = require('fs')
   const path = require('path')
-  
-  function getPath(folderName) {
-    return path.join(process.cwd(), folderName)
-  }
 
-  function getDirectories(path) {
-    return fs.readdirSync(path).filter((file) => {
-      return fs.statSync(path+'/'+file).isDirectory()
+  const getDocuments = (directory) => {
+    const directoryFiles = fs.readdirSync(directory)
+    const directories = {}
+    const files = []
+    directoryFiles.forEach((file) => {
+      const stat = fs.statSync(`${directory}/${file}`)
+      if (stat.isDirectory()) {
+        directories[file] = getDocuments(path.join(directory, file))
+      } else {
+        files.push(file)
+      }
     })
+    const result = {
+      files: files,
+      directories: directories,
+    }
+    return result
   }
 
-  function getFiles(path) {
-    return fs.readdirSync(path)
-  }
-
-  const docsFolders = getDirectories(getPath('docs'))
-  let files = []
-  let docsFoldersWithFiles = []
-
-  docsFolders.forEach((docFolder) => {
-    files.push(getFiles(getPath(`docs/${docFolder}`)))
-  })
-
-  docsFolders.forEach((folder, index) => {
-    let object = {}
-    object.name = folder
-    object.files = files[index]
-    docsFoldersWithFiles.push(object)
-  })
+  const allDirsAndFiles = getDocuments(path.join(process.cwd(), 'pages/docs'))
 
   return {
     props: {
-      localDocs: docsFoldersWithFiles,
+      allDirsAndFiles: allDirsAndFiles,
     },
   }
 }
