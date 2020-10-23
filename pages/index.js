@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export default function Index({ allDirsAndFiles }) {
-  console.log(allDirsAndFiles)
+import Sidebar from '../components/sidebar'
 
+export default function Index({ allDirsAndFiles }) {
   return (
     <div>
+      <Sidebar data={allDirsAndFiles.directories} />
       <h1>Dev Hub Index</h1>
     </div>
   )
@@ -41,7 +42,7 @@ export async function getStaticProps() {
     return result
   }
 
-  const allDirsAndFiles = getDocuments(path.join(process.cwd(), 'pages/docs'))
+  const allDirsAndFiles = getDocuments(path.join(process.cwd(), 'pages'))
 
   return {
     props: {
