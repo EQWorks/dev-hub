@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import Sidebar from '../components/sidebar'
 
 export default function Index({ children, frontMatter }) {
-
   return (
     <div>
       <Sidebar />
@@ -15,6 +14,7 @@ export default function Index({ children, frontMatter }) {
 }
 
 Index.propTypes = {
+  allDirsAndFiles: PropTypes.any,
   children: PropTypes.any,
   frontMatter: PropTypes.any,
 }

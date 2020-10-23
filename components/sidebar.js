@@ -2,13 +2,15 @@ import Link from 'next/link'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-export default function Sidebar({ data }) {
-  if (data) {
+export default function Sidebar({ apps }) {
+  // console.log(apps)
+
+  if (apps) {
     return (
       <div>
         <p>Sidebar</p>
         <ul>
-          {data.map((app, index) => {
+          {apps.map((app, index) => {
             return (
               <li key={index}>
                 <Link href={`/${app.slug}`}>
@@ -24,12 +26,14 @@ export default function Sidebar({ data }) {
   }
 
   return (
-    <p>No projects</p>
+    <Link href='/'>
+      <a>Home</a>
+    </Link>
   )
 }
 
 Sidebar.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
+  apps: PropTypes.arrayOf(PropTypes.shape({
     content: PropTypes.string,
     data: PropTypes.object,
     excerpt: PropTypes.string,

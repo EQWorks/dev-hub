@@ -15,4 +15,13 @@ module.exports = withMdxEnhanced({
 })({
   assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH,
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.node = {
+        fs: 'empty',
+      }
+    }
+
+    return config
+  },
 })
