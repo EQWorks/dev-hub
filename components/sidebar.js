@@ -7,11 +7,11 @@ export default function Sidebar({ data }) {
     <div>
       <p>Sidebar</p>
       <ul>
-        {Object.keys(data).map((slug, index) => {
+        {data.map((app, index) => {
           return (
             <li key={index}>
-              <Link href={`/${slug}`}>
-                <a>{slug}</a>
+              <Link href={`/${app.slug}`}>
+                <a>{app.data.title}</a>
               </Link>
             </li>
           )
@@ -23,5 +23,11 @@ export default function Sidebar({ data }) {
 }
 
 Sidebar.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    content: PropTypes.string,
+    data: PropTypes.object,
+    excerpt: PropTypes.string,
+    isEmpty: PropTypes.bool,
+    slug: PropTypes.string,
+  })).isRequired,
 }
