@@ -1,16 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function DocsPage({ children, frontMatter }) {
+import Sidebar from '../components/sidebar'
+
+export default function Index({ children, frontMatter }) {
+
   return (
     <div>
+      <Sidebar />
       <h1>{frontMatter.title}</h1>
       {children}
     </div>
   )
 }
 
-DocsPage.propTypes = {
+Index.propTypes = {
   children: PropTypes.any,
   frontMatter: PropTypes.any,
 }

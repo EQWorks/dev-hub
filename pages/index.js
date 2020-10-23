@@ -6,7 +6,7 @@ import Sidebar from '../components/sidebar'
 
 export default function Index({ allDirsAndFiles, sidebarData }) {
   console.log(allDirsAndFiles)
-  
+
   return (
     <div>
       <Sidebar data={sidebarData} />

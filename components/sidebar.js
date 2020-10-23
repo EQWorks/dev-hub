@@ -3,22 +3,28 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 export default function Sidebar({ data }) {
+  if (data) {
+    return (
+      <div>
+        <p>Sidebar</p>
+        <ul>
+          {data.map((app, index) => {
+            return (
+              <li key={index}>
+                <Link href={`/${app.slug}`}>
+                  <a>{app.data.title}</a>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+        <hr />
+      </div>
+    )
+  }
+
   return (
-    <div>
-      <p>Sidebar</p>
-      <ul>
-        {data.map((app, index) => {
-          return (
-            <li key={index}>
-              <Link href={`/${app.slug}`}>
-                <a>{app.data.title}</a>
-              </Link>
-            </li>
-          )
-        })}
-      </ul>
-      <hr />
-    </div>
+    <p>No projects</p>
   )
 }
 
@@ -29,5 +35,5 @@ Sidebar.propTypes = {
     excerpt: PropTypes.string,
     isEmpty: PropTypes.bool,
     slug: PropTypes.string,
-  })).isRequired,
+  })),
 }
