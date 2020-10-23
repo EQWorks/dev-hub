@@ -1,13 +1,13 @@
 import matter from 'gray-matter'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { URL_PREFIX } from '../utils/constants'
 import Context from '../utils/context'
 
 function ContextProvider({ children, value }) {
-  const valueState = (value) ? value : null
+  const [valueState] = useState(value)
 
   return (
     <Context.Provider value={valueState}>

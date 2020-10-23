@@ -5,11 +5,13 @@ import Context from '../utils/context'
 
 export default function Index() {
   const appContext = useContext(Context)
-  // console.log(appContext)
+  console.log('index', appContext)
 
   return (
     <div>
-      <Sidebar apps={appContext.sidebarData} />
+      {appContext && (
+        <Sidebar apps={appContext.sidebarData} />
+      )}
       <h1>Dev Hub Index</h1>
     </div>
   )
