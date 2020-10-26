@@ -21,7 +21,6 @@ module.exports = withMdxEnhanced({
         fs: 'empty',
       }
     }
-
     return config
   },
 })
