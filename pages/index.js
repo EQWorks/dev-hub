@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 
-import Sidebar from '../components/sidebar'
+// import Sidebar from '../components/sidebar'
 import Context from '../utils/context'
 
 export default function Index() {
   const appContext = useContext(Context)
-  console.log('index', appContext)
+  console.log(appContext)
 
   return (
     <div>
-      {appContext && (
+      {/* {appContext && (
         <Sidebar apps={appContext.sidebarData} />
-      )}
+      )} */}
       <h1>Dev Hub Index</h1>
     </div>
   )

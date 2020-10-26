@@ -56,7 +56,20 @@ MyApp.getInitialProps = async (context) => {
         if (stat.isDirectory()) {
           directories[file] = getDocuments(path.join(directory, file))
         } else {
-          files.push(file)
+          if (file.substr(file.lastIndexOf('.') + 1) === 'mdx') {
+            const parsedFile = matter(fs.readFileSync(path.join(directory, `/${file}`)), 'utf8')
+            files.push({
+              fileName: file,
+              content: parsedFile.content,
+              data: parsedFile.data,
+              isEmpty: parsedFile.isEmpty,
+              excerpt: parsedFile.excerpt,
+            })
+          } else {
+            files.push({
+              fileName: file,
+            })
+          }
         }
       })
       const result = {
@@ -65,26 +78,11 @@ MyApp.getInitialProps = async (context) => {
       }
       return result
     }
-    const allDirsAndFiles = getDocuments(path.join(process.cwd(), 'pages'))
-
-    // get metadata of all apps inside `pages/`
-    let sidebarData = []
-    const apps = Object.keys(allDirsAndFiles.directories)
-    for (const key of apps) {
-      const parsedFile = matter(fs.readFileSync(path.join(process.cwd(), `pages/${key}/index.mdx`), 'utf8'))
-      sidebarData.push({
-        slug: key,
-        content: parsedFile.content,
-        data: parsedFile.data,
-        isEmpty: parsedFile.isEmpty,
-        excerpt: parsedFile.excerpt,
-      })
-    }
+    const pages = getDocuments(path.join(process.cwd(), 'pages'))
 
     return {
       appProps: {
-        allDirsAndFiles: allDirsAndFiles,
-        sidebarData: sidebarData,
+        pages: pages,
       },
     }
   }
