@@ -8,47 +8,40 @@ export default function Sidebar() {
   const appContext = useContext(Context)
   const router = useRouter()
 
-  const appName = router.pathname.split('/')[1]
-  console.log(appContext.pages.directories)
+  const appName = (router.pathname !== '/') ? `/${router.pathname.split('/')[1]}/` : false
+  // console.log(appName)
+  // console.log(appContext.pages)
 
-  const getLink = (prevDir, file) => {
+  if (!appName) {
     return (
-      <li>
-        <a href={`${prevDir}${file.fileName}`}>{file.data ? file.data.title : file.fileName}</a>
-      </li>
+      <div>
+        <ul>
+          <li>
+            <a href='/'>Home</a>
+          </li>
+          {appContext.pages.map((project, index) => {
+            // search for file with shorted path, which means it is the index file for that project
+            const indexFile = project.filter(v => !Array.isArray(v))
+              .reduce((a, v) => a && a.path.length <= v.path.length ? a : v, '')
+            return (
+              <li key={index}>
+                <Link href={indexFile.path}>
+                  <a>{indexFile.fileData.data.title}</a>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     )
   }
 
-  const getDirectory = (prevDir = '/', directory, data) => {
-    // console.log('getDirectory', prevDir, directory, data)
-    return (
-      <li>
-        <details>
-          {getLinks(`${prevDir}${directory}/`, data)}
-        </details>
-      </li>
-    )
-  }
-
-  const getLinks = (prevDir = '/', data) => {
-    // console.log('getLinks', prevDir, data)
-    return (
-      <>
-        {data.files && data.files.map(f => getLink(prevDir, f))}
-        {data.directories && Object.keys(data.directories).map(key => getDirectory(prevDir, key, data.directories[key]))}
-      </>
-    )
-  }
-	
   return (
     <div>
-      <h1>Links for app {appName}</h1>
-      <p>SCENARIO B</p>
       <ul>
         <li>
           <a href='/'>Home</a>
         </li>
-        {getLinks(`/${appName}/`, appContext.pages.directories[appName], -1)}
       </ul>
     </div>
   )

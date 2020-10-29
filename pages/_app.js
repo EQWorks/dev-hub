@@ -22,7 +22,6 @@ ContextProvider.propTypes = {
 }
 
 function MyApp({ appProps, Component, pageProps }) {
-  console.log(appProps)
   return (
     <ContextProvider value={appProps}>
       <Head>
@@ -43,6 +42,7 @@ MyApp.propTypes = {
 }
 
 MyApp.getInitialProps = async (context) => {
+  // if context is a server-side execution
   if (context.ctx.res) {
     const fs = require('fs')
     const path = require('path')
@@ -83,10 +83,7 @@ MyApp.getInitialProps = async (context) => {
         }
       })
 
-      // flatten array and sort alphabetically by path string
-      return result.flat().sort(function(a, b) {
-        return a.path - b.path
-      })
+      return result
     }
 
     const pages = getDocuments(path.join(process.cwd(), 'pages'))
