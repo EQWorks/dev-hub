@@ -22,6 +22,7 @@ ContextProvider.propTypes = {
 }
 
 function MyApp({ appProps, Component, pageProps }) {
+  console.log(appProps)
   return (
     <ContextProvider value={appProps}>
       <Head>
@@ -48,39 +49,46 @@ MyApp.getInitialProps = async (context) => {
 
     // get all directories and files inside `pages/`
     const getDocuments = (directory) => {
+      const result = []
       const directoryFiles = fs.readdirSync(directory)
-      const directories = {}
-      const files = []
-      let pathName = '/'
+
       directoryFiles.forEach((file) => {
-        const stat = fs.statSync(`${directory}/${file}`)
-        if (stat.isDirectory()) {
-          directories[file] = getDocuments(path.join(directory, file))
-          directories[file].pathName = path.join(directory, file).split('pages').pop()
+        const pathStats = fs.statSync(`${directory}/${file}`)
+
+        if (pathStats.isDirectory()) {
+          // if path is a directory, then recursively query it
+          result.push(getDocuments(path.join(directory, file)))
         } else {
-          if (file.substr(file.lastIndexOf('.') + 1) === 'mdx') {
+          // if path is an mdx/md file, then save it to an array
+          if (file.includes('mdx') || file.includes('md')) {
+            // format file path based if file is index or not, and get file Front Matter content
+            const parsedPath =
+              (file.includes('index'))
+                ? path.join(directory.substring(directory.indexOf('pages') + 'pages'.length), '/')
+                : path.join(directory.substring(directory.indexOf('pages') + 'pages'.length), file)
+                  .replace('.mdx', '')
+                  .replace('.md', '')
             const parsedFile = matter(fs.readFileSync(path.join(directory, `/${file}`)), 'utf8')
-            files.push({
-              fileName: file,
-              content: parsedFile.content,
-              data: parsedFile.data,
-              isEmpty: parsedFile.isEmpty,
-              excerpt: parsedFile.excerpt,
-            })
-          } else {
-            files.push({
-              fileName: file,
+
+            result.push({
+              path: parsedPath,
+              fileData: {
+                content: parsedFile.content,
+                data: parsedFile.data,
+                isEmpty: parsedFile.isEmpty,
+                excerpt: parsedFile.excerpt,
+              },
             })
           }
         }
       })
-      const result = {
-        files,
-        directories,
-        pathName,
-      }
-      return result
+
+      // flatten array and sort alphabetically by path string
+      return result.flat().sort(function(a, b) {
+        return a.path - b.path
+      })
     }
+
     const pages = getDocuments(path.join(process.cwd(), 'pages'))
 
     return {
