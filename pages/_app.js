@@ -51,10 +51,12 @@ MyApp.getInitialProps = async (context) => {
       const directoryFiles = fs.readdirSync(directory)
       const directories = {}
       const files = []
+      let pathName = '/'
       directoryFiles.forEach((file) => {
         const stat = fs.statSync(`${directory}/${file}`)
         if (stat.isDirectory()) {
           directories[file] = getDocuments(path.join(directory, file))
+          directories[file].pathName = path.join(directory, file).split('pages').pop()
         } else {
           if (file.substr(file.lastIndexOf('.') + 1) === 'mdx') {
             const parsedFile = matter(fs.readFileSync(path.join(directory, `/${file}`)), 'utf8')
@@ -73,8 +75,9 @@ MyApp.getInitialProps = async (context) => {
         }
       })
       const result = {
-        files: files,
-        directories: directories,
+        files,
+        directories,
+        pathName,
       }
       return result
     }
