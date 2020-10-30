@@ -15,8 +15,12 @@ export default function Sidebar() {
     if (file.data) {
       return file.data.linkTitle ? file.data.linkTitle : file.data.title
     } else {
-      return file.fileName
+      return getFormattedFilename(file.fileName ? file.fileName : file.pathName)
     }
+  }
+  const getFormattedFilename = (fileName) => {
+    return fileName.split('/').pop().replace(/\.[^/.]+$/, '').
+      replace(/-/g, ' ').replace(/(?: |\b)(\w)/g, function(key) { return key.toUpperCase()})
   }
   const getFilePath = (path, fileName) => {
     return `${path}/${fileName === 'index.mdx' ? '' : fileName.replace(/\.[^/.]+$/, '')}`
@@ -83,7 +87,7 @@ export default function Sidebar() {
       <Link href="/">
         <a>Home</a>
       </Link>
-      <ul>{renderDirectory(router.pathname, appContext.pages.apps[appName])}</ul>
+      <div>{renderDirectoryContents(router.pathname, appContext.pages.apps[appName])}</div>
     </div>
   )
 }

@@ -80,6 +80,9 @@ MyApp.getInitialProps = async (context) => {
             }
             if (level === 0 || file !== 'index.mdx') {
               if (file === 'index.mdx') {
+                if (level === 0) {
+                  parsedFile.data.linkTitle = 'Overview'
+                }
                 files.unshift({
                   fileName: file,
                   content: parsedFile.content,
