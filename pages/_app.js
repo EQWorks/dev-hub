@@ -42,51 +42,71 @@ MyApp.propTypes = {
 }
 
 MyApp.getInitialProps = async (context) => {
-  // if context is a server-side execution
   if (context.ctx.res) {
     const fs = require('fs')
     const path = require('path')
 
-    // get all directories and files inside `pages/`
-    const getDocuments = (directory) => {
-      const result = []
+    const getApps = (directory) => {
       const directoryFiles = fs.readdirSync(directory)
-
+      const apps = {}
       directoryFiles.forEach((file) => {
-        const pathStats = fs.statSync(`${directory}/${file}`)
+        const stat = fs.statSync(`${directory}/${file}`)
+        if (stat.isDirectory()) {
+          apps[file] = getDocuments(0, directory, file)
+        }
+      })
+      return {
+        apps,
+      }
+    }
 
-        if (pathStats.isDirectory()) {
-          // if path is a directory, then recursively query it
-          result.push(getDocuments(path.join(directory, file)))
+    const getDocuments = (level, root, directory) => {
+      const directoryFiles = fs.readdirSync(path.join(root, directory))
+      const directories = {}
+      const files = []
+      let data = []
+      let content = []
+      let pathName = `/${directory}`
+      directoryFiles.forEach((file) => {
+        const stat = fs.statSync(path.join(root, directory, file))
+        if (stat.isDirectory()) {
+          directories[file] = getDocuments(level + 1, root, path.join(directory, file))
         } else {
-          // if path is an mdx/md file, then save it to an array
-          if (file.includes('mdx') || file.includes('md')) {
-            // format file path based if file is index or not, and get file Front Matter content
-            const parsedPath =
-              (file.includes('index'))
-                ? path.join(directory.substring(directory.indexOf('pages') + 'pages'.length), '/')
-                : path.join(directory.substring(directory.indexOf('pages') + 'pages'.length), file)
-                  .replace('.mdx', '')
-                  .replace('.md', '')
-            const parsedFile = matter(fs.readFileSync(path.join(directory, `/${file}`)), 'utf8')
-
-            result.push({
-              path: parsedPath,
-              fileData: {
-                content: parsedFile.content,
-                data: parsedFile.data,
-                isEmpty: parsedFile.isEmpty,
-                excerpt: parsedFile.excerpt,
-              },
-            })
+          if (file.toLowerCase().substr(file.lastIndexOf('.') + 1) === 'mdx') {
+            const parsedFile = matter(fs.readFileSync(path.join(root, directory, file)), 'utf8')
+            if (file === 'index.mdx') {
+              data = parsedFile.data
+              content = parsedFile.content
+            }
+            if (level === 0 || file !== 'index.mdx') {
+              if (file === 'index.mdx') {
+                files.unshift({
+                  fileName: file,
+                  content: parsedFile.content,
+                  data: parsedFile.data,
+                })
+              } else {
+                files.push({
+                  fileName: file,
+                  content: parsedFile.content,
+                  data: parsedFile.data,
+                })
+              }
+            }
           }
         }
       })
-
+      const result = {
+        files,
+        directories,
+        pathName,
+        data,
+        content,
+        level,
+      }
       return result
     }
-
-    const pages = getDocuments(path.join(process.cwd(), 'pages'))
+    const pages = getApps(path.join(process.cwd(), 'pages'))
 
     return {
       appProps: {
