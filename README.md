@@ -6,14 +6,15 @@ A centralized resource for project documentation.
 
 ## Content Management
 
-The content of this website is pulled from repository root-level `docs/` directories containing [Markdown](https://guides.github.com/features/mastering-markdown/) files with proper use of [YAML Front matter](https://jekyllrb.com/docs/front-matter/).
+The content of this website is pulled from repository root-level `docs/` directories containing [MDX](https://mdxjs.com/) files with proper use of [YAML Front matter](https://jekyllrb.com/docs/front-matter/).
 
 ### Directory Structure
 
-To have the content of a repository included in the `dev-hub`, the directory structure must adhere to the following convention:
+To have the content of a repository included in the `dev-hub`, the directory structure must adhere to the following:
 
-- The repository contains a root-level `docs/` directory.
-- The `docs/` and all respective sub-directories must contain an `index.md`.
+1. The repository contains a root-level `docs/` directory.
+2. The `docs/` and all respective sub-directories must contain an `index.mdx`.
+
 - Example repository directory structure:
 
 ```yaml
@@ -25,17 +26,17 @@ project
 │   yarn.lock
 │
 └───docs
-│   │   index.md
+│   │   index.mdx
 │   │
 │   └───marketplace
-│   │   │   billing-customers.md
-│   │   │   index.md
-│   │   │   security-requirements.md
+│   │   │   billing-customers.mdx
+│   │   │   index.mdx
+│   │   │   security-requirements.mdx
 │   │
 │   └───rest-api
-│   │   │   authentication-basics.md
-│   │   │   getting-started.md
-│   │   │   index.md
+│   │   │   authentication-basics.mdx
+│   │   │   getting-started.mdx
+│   │   │   index.mdx
 │
 └───src
 │   index.js
@@ -43,7 +44,7 @@ project
 
 ### Front Matter
 
-All Markdown files must contain the appropriate YAML Front matter elements:
+All MDX files must contain the appropriate YAML Front matter elements:
 
 #### `version`
 
@@ -91,7 +92,7 @@ shortTitle: "LOCUS"
 intro: "LOCUS is a product made by EQ Works."
 ```
 
-### Example Markdown File
+### Example MDX File
 
 ```yaml
 ---
@@ -123,7 +124,7 @@ To get the website running locally, please do the following:
 
 ## Production
 
-We are not quite there yet, however we will be deploying this to [GitHub pages](https://pages.github.com/), as the result of this project will be a Static-Site Generated (SSG) website.
+The website is deployed to [GitHub pages](https://pages.github.com/) by pushing to the `main` branch, as a Static-Site Generated (SSG) website.
 
 ---
 
