@@ -1,8 +1,19 @@
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import MenuIcon from '@material-ui/icons/Menu'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
 
 import Context from '../utils/context'
+
+const StyledAppBarTitle = withStyles((theme) => {
+  return {
+    root: {
+      padding: `0 0 0 ${theme.spacing(1)}px`,
+    },
+  }
+})(Typography)
 
 export default function Sidebar() {
   const appContext = useContext(Context)
@@ -18,29 +29,36 @@ export default function Sidebar() {
       return getFormattedFilename(file.fileName ? file.fileName : file.pathName)
     }
   }
+
   const getFormattedFilename = (fileName) => {
     return fileName.split('/').pop().replace(/\.[^/.]+$/, '').
       replace(/-/g, ' ').replace(/(?: |\b)(\w)/g, function(key) { return key.toUpperCase()})
   }
+
   const getFilePath = (path, fileName) => {
     return `${path}/${fileName === 'index.mdx' ? '' : fileName.replace(/\.[^/.]+$/, '')}`
   }
+
   const renderFile = (path, file) => {
     return <li key={file.fileName}><a href={getFilePath(path, file.fileName)}>{getFileTitle(file)}</a></li>
   }
+
   const mdxOnly = (file) => {
     const re = /(?:\.([^.]+))?$/
     return re.exec(file.fileName)[1].toLowerCase() === 'mdx'
   }
+
   const getArrow = (isOpen) => {
     return isOpen ? '--Down--' : '--Up--'
   }
+
   const isOpen = (currentPath, directory) => {
     if (currentPath === directory.pathName) return true
     const directoryTokens = directory.pathName.split('/').filter(i => i.length)
     const currentPathTokens = currentPath.split('/').filter(i => i.length)
     return directoryTokens.every((t, i) => currentPathTokens[i] === t)
   }
+
   const renderDirectory = (currentPath, directory) => {
     const opened = isOpen(currentPath, directory)
     return <li key={directory.pathName}>
@@ -48,6 +66,7 @@ export default function Sidebar() {
       {opened && renderDirectoryContents(currentPath, directory)}
     </li>
   }
+
   const renderDirectoryContents = (currentPath, directory) => {
     return <ul>
       {directory.files &&
@@ -63,8 +82,16 @@ export default function Sidebar() {
 
   if (!appName) {
     return (
-      <div>
-        <Link href="/">
+      <nav>
+        <AppBar position='static'>
+          <Toolbar>
+            <IconButton edge='start' color='inherit' aria-label='menu'>
+              <MenuIcon />
+            </IconButton>
+            <StyledAppBarTitle component="p" variant='h6'>EQ Dev Hub</StyledAppBarTitle>
+          </Toolbar>
+        </AppBar>
+        <Link href='/'>
           <a>Home</a>
         </Link>
         <div>
@@ -78,16 +105,16 @@ export default function Sidebar() {
             )
           })}
         </div>
-      </div>
+      </nav>
     )
   }
 
   return (
-    <div>
-      <Link href="/">
+    <nav>
+      <Link href='/'>
         <a>Home</a>
       </Link>
       <div>{renderDirectoryContents(router.pathname, appContext.pages.apps[appName])}</div>
-    </div>
+    </nav>
   )
 }

@@ -5,11 +5,13 @@ import Sidebar from '../components/sidebar'
 
 export default function Index({ children, frontMatter }) {
   return (
-    <div>
+    <>
       <Sidebar />
-      <h1>{frontMatter.title}</h1>
-      {children}
-    </div>
+      <div>
+        <h1>{frontMatter.title}</h1>
+        {children}
+      </div>
+    </>
   )
 }
 

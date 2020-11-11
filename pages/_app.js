@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@eqworks/react-labs'
 import matter from 'gray-matter'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
@@ -5,6 +6,8 @@ import React, { useState } from 'react'
 
 import { URL_PREFIX } from '../utils/constants'
 import Context from '../utils/context'
+
+import '../public/styles-global.css'
 
 function ContextProvider({ children, value }) {
   const [valueState] = useState(value)
@@ -24,11 +27,13 @@ ContextProvider.propTypes = {
 function MyApp({ appProps, Component, pageProps }) {
   return (
     <ContextProvider value={appProps}>
-      <Head>
-        <title>EQ Works | Dev Hub</title>
-        <link href={`${URL_PREFIX}/favicon.ico`} rel="shortcut icon" />
-      </Head>
-      <Component {...pageProps} />
+      <ThemeProvider>
+        <Head>
+          <title>EQ Works | Dev Hub</title>
+          <link href={`${URL_PREFIX}/favicon.ico`} rel="shortcut icon" />
+        </Head>
+        <Component {...pageProps} />
+      </ThemeProvider>
     </ContextProvider>
   )
 }
