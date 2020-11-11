@@ -1170,9 +1170,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
   integrity sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==
 
-"@eqworks/react-labs@file:../react-labs/eqworks-react-labs-v1.11.0-local-3.tgz":
+"@eqworks/react-labs@^1.11.0":
   version "1.11.0"
-  resolved "file:../react-labs/eqworks-react-labs-v1.11.0-local-3.tgz#a1f4598a6bcfd181bd1f4295da8aaa404d3f9161"
+  resolved "https://npm.pkg.github.com/download/@eqworks/react-labs/1.11.0/ec3324528c16ba987e46a6348881d2ffad2ce8242ae68ae6a8ed4df1dda697d9#b5926efb6a11e4b7f7aba380220052b1bc53e60b"
+  integrity sha512-mFTZMnbZkjvVbytOC/QHNm7pwikxqVt2gprWrHBssS7gy4nx1yHRu4HVzKbuxW8yd/h8kbmt8hBlumoUVH+L2w==
   dependencies:
     axios "^0.20.0"
     clsx "^1.1.1"
